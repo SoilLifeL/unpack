@@ -1,2 +1,2 @@
 # unpack
-Unpacking iterators without (*)
+Unpacks iterators without (*)
