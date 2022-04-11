@@ -15,15 +15,16 @@ def func_handler(*funcs):
 	return redefined_funcs if len(redefined_funcs)>1 else redefined_funcs[0]
 	
 ##EXAMPLE:
-def foo(x,y,z,t,w):
-	return x+y+z+t+w
-def bar(a,b,c):
-	return a*b*c
-_foo, _bar = func_handler(foo, bar)
-print(   _foo(  unpack( [1,2] ), 3, unpack( [4,5] )  )   )
-print(   _bar(  10, unpack( [3,5] )  )   )
-print(   _foo( unpack([10,10,10,10,10]) )   )
+if __name__ == "__main__":
+    def foo(x,y,z,t,w):
+  	    return x+y+z+t+w
+    def bar(a,b,c):
+	    return a*b*c
+    _foo, _bar = func_handler(foo, bar)
+    print(   _foo(  unpack( [1,2] ), 3, unpack( [4,5] )  )   )
+    print(   _bar(  10, unpack( [3,5] )  )   )
+    print(   _foo( unpack([10,10,10,10,10]) )   )
 
-#or, you can use a "tricky" way to save functions' original names:
-#_foo, _bar = foo, bar
-#foo, bar = func_handler(_foo, _bar)
+    #or, you can use a "tricky" way to save functions' original names:
+    #_foo, _bar = foo, bar
+    #foo, bar = func_handler(_foo, _bar)
