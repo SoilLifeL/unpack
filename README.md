@@ -9,7 +9,7 @@
   def foo(x, y, z, t): #a dummy function
       return x+y+z+t
 
-  def bar(a, b, c, d) #again, a dummy function
+  def bar(a, b, c, d) #one more dummy function
       return a*b*c*d
 
   globals().update(  func_handler(foo, bar)  ) #you are also able to use this with `locals()`
