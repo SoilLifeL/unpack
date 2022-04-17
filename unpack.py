@@ -1,17 +1,6 @@
 import inspect
 class unpack:
     def __init__(self,iterator):
-        self.iterator = iterator
-        self._handle_self_iterator()
-        
-    def __repr__(self):
-        return f"unpack({self.iterator})"
-
-    def _handle_self_iterator(self):
-        self.iterator = unpack.handle_iter(self.iterator)
-        
-    @staticmethod
-    def handle_iter(iterator):
         new_iter = []
         for item in iterator:
             if type(item) == type(unpack([])):
@@ -20,8 +9,10 @@ class unpack:
                 new_iter.append(unpack.handle_iter(item))
             else:
                 new_iter.append(item)
-        return new_iter
-                
+        self.iterator = new_iter
+        
+    def __repr__(self):
+        return f"unpack({self.iterator})"
 
 def func_handler(func):
     def new_func(*args) -> "INFO: "+ str(inspect.getfullargspec(func)): 
@@ -35,11 +26,11 @@ def func_handler(func):
         return func(*handled_args)
     return new_func
 
-def multi_func_handler(*funcs):
+def multi_func_handler(*funcs, rt_type = dict ):
     new_funcs = {}
     for func in funcs:
         new_funcs[func.__name__] = func_handler(func)
-    return new_funcs
+    return new_funcs if rt_type == dict else rt_type(new_funcs.values())
 
 def class_handler(cls):
     class_methods = {}
@@ -57,11 +48,11 @@ def class_handler(cls):
         setattr(cls,method_name,class_methods_new[method_name])
     return cls
 
-def multi_class_handler(*classes):
+def multi_class_handler(*classes, rt_type = dict):
     new_classes = {}
     for cls in classes:
         new_classes[cls.__name__] = class_handler(cls)
-    return new_classes
+    return new_classes if rt_type == dict else rt_type(new_classes.values())
         
 def scope_handler(scope, funcs = True, classes = True, dunders = False)->"Returns a dict. Handles all functions exist in the given scope. Usage: globals().update( scope_handler(globals()) )":
     new_scope = scope.copy()
