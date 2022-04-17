@@ -1,4 +1,5 @@
 # Basic Unpack Toolkit
+
 ## What Is It and What Does It Do?
   It is an alternative toolkit to `functools.reduce` -though there are lots of differences between them-. It enables you to unpack iterators without the usage of asterisk.
   Increases readibility level (for those who do not like using an asterisk).
@@ -8,7 +9,7 @@
   @func_handler #foo will be able to take unpack objects! Yayy!
   def foo(a, b, c, d) -> "a + b + c + d" :
       return a + b + c + d
-
+      
   result0 = foo(1, 2, 3, 4) # Please note that it is not not a requirement to pass unpack objects to your handled-or decorated- function. 
   #'Resolving unpack objects' is just an *extra* feature added to your function.
   result1 = foo( unpack([1,2,3,4]) )
