@@ -1,20 +1,80 @@
 # Basic Unpack Toolkit
-## What Does It Do?
-  It enables you to unpack iterators without the usage of asterisk.
-## How To Use? 
-  ```python
-  from unpack import *
-  #this imports <class> unpack and <function> func_handler.
 
-  def foo(x, y, z, t): #a dummy function
-      return x+y+z+t
+## What Is It and What Does It Do?
+  It is an alternative toolkit to `functools.reduce` -though there are lots of differences between them-. It enables you to unpack iterators without the usage of asterisk.
+  Increases readibility level (for those who do not like using an asterisk).
+## Features
+* You can pass unpack objects to handled functions. Example:
+  ```python3
+  @func_handler #foo will be able to take unpack objects! Yayy!
+  def foo(a, b, c, d) -> "a + b + c + d" :
+      return a + b + c + d
+      
+  result0 = foo(1, 2, 3, 4) # Please note that it is not not a requirement to pass unpack objects to your handled-or decorated- function. 
+  #'Resolving unpack objects' is just an *extra* feature added to your function.
+  result1 = foo( unpack([1,2,3,4]) )
+  result2 = foo( unpack([ 1,2, unpack([3,4]) ]) ) #Deep `unpack`s are allowed and works fine.
+  result3 = foo( unpack([1,2]),3,4 ) #You can use a mixture of unpack and other kind of objects.
 
-  def bar(a, b, c, d) #one more dummy function
-      return a*b*c*d
-
-  globals().update(  func_handler(foo, bar)  ) #you are also able to use this with `locals()`
-  result_foo = foo(  unpack( [1,2] ), 3, 4  ) #equals to 10
-  result_bar = bar(  1, unpack( [2,3] ), 4  ) #equals to 24
-  print(f"result_foo equals to {result_foo}.")
-  print(f"result_bar equals to {result_bar}.")
+  print(result0, result1, result2, result3)
   ```
+* You can also handle multiple functions at one time using `multi_func_handler`. Note that it returns a dictionary by default(You can change the argument "rt_type").
+  ### Usage-1 :
+    ```python3
+    def foo(a, b, c, d) -> "a + b + c + d" :
+        return a + b + c + d
+        
+    def bar(x, y, z) -> "x * y * z":
+        return x * y * z
+        
+    foo, bar = multi_func_handler(foo, bar, rt_type = tuple )
+    print( foo( unpack([1,2,3,4]) ) )
+    print( bar( unpack([1,2,3]) ) )
+    ```
+  ### Usage-2 :
+    ```python3
+    def foo(a, b, c, d) -> "a + b + c + d" :
+        return a + b + c + d
+        
+    def bar(x, y, z) -> "x * y * z":
+        return x * y * z
+        
+    globals().update( multi_func_handler(foo, bar) ) #You can also use locals() instead of globals()
+    ```
+* You can handle a class and then, you will be able to pass unpack objects to its methods as arguments :
+  ```python3
+  @class_handler
+  class Foo:
+      #Your code goes here
+  ```
+* You can handle multiple classes at one time using `multi_class_handler`. (This "multi-handler" also returns a dict as default.)
+  ### USAGE-1:
+    ```python3
+    class Foo:
+        pass
+    class Bar:
+        pass
+    Foo, Bar = multi_class_handler(Foo, Bar, rt_type = tuple )
+    ```
+  ### USAGE-2:
+    ```python3
+    class Foo:
+        pass
+    class Bar:
+        pass
+    globals().update( multi_class_handler(Foo, Bar) ) #You can also use locals() instead of globals()
+    ```
+* You can handle the whole scope with `scope_handler`. Arguments: `(scope, funcs = True, classes = True, dunders = False)`. Usage:
+  ```python3
+  def foo_bar(x,y,z):
+      pass
+      
+  class Foo:
+      pass
+      
+  class Bar:
+      pass
+  
+  globals().update( scope_handler(globals()) )
+  ```
+  Note: `dunders` include everything starts with an underscore.
