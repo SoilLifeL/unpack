@@ -1,4 +1,4 @@
-# Basic Unpack Toolkit (Actually Just One Tool)
+# Basic Unpack Toolkit
 ## What Does It Do?
   It enables you to unpack iterators without the usage of asterisk.
 ## How To Use? 
