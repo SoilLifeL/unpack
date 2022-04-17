@@ -26,7 +26,7 @@
     def bar(x, y, z) -> "x * y * z":
         return x * y * z
         
-    foo, bar = multi_func_handler(foo, bar, rt_type = () )
+    foo, bar = multi_func_handler(foo, bar, rt_type = tuple )
     print( foo( unpack([1,2,3,4]) ) )
     print( bar( unpack([1,2,3]) ) )
     ```
@@ -53,7 +53,7 @@
         pass
     class Bar:
         pass
-    Foo, Bar = multi_class_handler(Foo, Bar, rt_type = () )
+    Foo, Bar = multi_class_handler(Foo, Bar, rt_type = tuple )
     ```
   ### USAGE-2:
     ```python3
